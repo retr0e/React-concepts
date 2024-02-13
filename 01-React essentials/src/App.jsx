@@ -1,16 +1,23 @@
 // Default export
 import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept/CoreConcept.jsx";
-import TabButton from "./components/TabButton.jsx";
+import TabButton from "./components/TabButton/TabButton.jsx";
 
 // Named export
 import { CORE_CONCEPTS } from "./data.js";
 
+// React hooks (all React hooks have a "use" prefix)
+import { useState } from "react";
+
 function App() {
+  // States naming convention
+  //     Current Value  Updating function            Initial Value
+  const [selectedTopic, setSelectedTopic] = useState("Please click a button");
+
   // Naming convention or clickHandler()
   function handleSelect(selectedButton) {
     // selected => 'components', 'jsx', 'props', 'state'
-    console.log(selectedButton);
+    setSelectedTopic(selectedButton);
   }
 
   return (
@@ -41,7 +48,7 @@ function App() {
             <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
             <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
           </menu>
-          Dynamic Content
+          <div id='tab-content'></div>
         </section>
       </main>
     </div>
