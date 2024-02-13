@@ -2,13 +2,15 @@
 import Header from "./components/Header/Header.jsx";
 import CoreConcept from "./components/CoreConcept/CoreConcept.jsx";
 import TabButton from "./components/TabButton.jsx";
+
 // Named export
 import { CORE_CONCEPTS } from "./data.js";
 
 function App() {
   // Naming convention or clickHandler()
-  function handleSelect() {
-    console.log("Hello World! - selected!");
+  function handleSelect(selectedButton) {
+    // selected => 'components', 'jsx', 'props', 'state'
+    console.log(selectedButton);
   }
 
   return (
@@ -31,10 +33,13 @@ function App() {
         <section id='examples'>
           <h2>Examples</h2>
           <menu>
-            <TabButton onSelect={handleSelect}>Components</TabButton>
-            <TabButton onSelect={handleSelect}>JSX</TabButton>
-            <TabButton onSelect={handleSelect}>Props</TabButton>
-            <TabButton onSelect={handleSelect}>State</TabButton>
+            {/* <TabButton onSelect={handleSelect}>Components</TabButton> */}
+            <TabButton onSelect={() => handleSelect("components")}>
+              Components
+            </TabButton>
+            <TabButton onSelect={() => handleSelect("jsx")}>JSX</TabButton>
+            <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
+            <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
           </menu>
           Dynamic Content
         </section>
