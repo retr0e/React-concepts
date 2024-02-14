@@ -7,7 +7,7 @@ import TabButton from "./components/TabButton/TabButton.jsx";
 import { EXAMPLES, CORE_CONCEPTS } from "./data.js";
 
 // React hooks (all React hooks have a "use" prefix)
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 function App() {
   // States naming convention
@@ -39,26 +39,33 @@ function App() {
   }
 
   return (
-    <div>
+    /* Fragment is built-in component to pack the others created components
+     or you can use <> for opening or </> for closing */
+    <Fragment>
       <Header />
       <main>
         <section id='core-concepts'>
           <h2>Core Concepts</h2>
           <ul>
-            <CoreConcept
+            {/* Better show solution => dynamically */}
+            {CORE_CONCEPTS.map((conceptItem) => (
+              <CoreConcept key={conceptItem.title} {...conceptItem} />
+            ))}
+
+            {/* Example show solution => static */}
+            {/* <CoreConcept
               title={CORE_CONCEPTS[0].title}
               description={CORE_CONCEPTS[0].description}
               image={CORE_CONCEPTS[0].image}
             />
             <CoreConcept {...CORE_CONCEPTS[1]} />
             <CoreConcept {...CORE_CONCEPTS[2]} />
-            <CoreConcept {...CORE_CONCEPTS[3]} />
+            <CoreConcept {...CORE_CONCEPTS[3]} /> */}
           </ul>
         </section>
         <section id='examples'>
           <h2>Examples</h2>
           <menu>
-            {/* <TabButton onSelect={handleSelect}>Components</TabButton> */}
             <TabButton
               isSelected={selectedTopic === "components"}
               onSelect={() => handleSelect("components")}
@@ -121,7 +128,7 @@ function App() {
           {tabContent}
         </section>
       </main>
-    </div>
+    </Fragment>
   );
 }
 
