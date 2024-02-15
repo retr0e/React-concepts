@@ -40,7 +40,7 @@ export default function Examples() {
       <Tabs
         // Custom components are used simply by name like "Section" not "<Section />"
         // and built-in components like string
-        ButtonsContainer='menu'
+        ButtonContainer='menu'
         buttons={
           <>
             <TabButton
