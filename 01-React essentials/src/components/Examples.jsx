@@ -38,6 +38,9 @@ export default function Examples() {
   return (
     <Section title='Examples' id='examples'>
       <Tabs
+        // Custom components are used simply by name like "Section" not "<Section />"
+        // and built-in components like string
+        ButtonsContainer='menu'
         buttons={
           <>
             <TabButton
