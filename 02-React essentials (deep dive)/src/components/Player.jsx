@@ -4,7 +4,11 @@ export default function Player({ name, symbol }) {
   const [isEditing, setIsEditing] = useState(false);
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    // Schedules a state update to opposite
+    // setIsEditing(!isEditing)
+
+    // React ensures that the most recent state value is used when functional updates are employed
+    setIsEditing((editing) => !editing);
   };
 
   let playerName = <span className='player-name'>{name}</span>;
