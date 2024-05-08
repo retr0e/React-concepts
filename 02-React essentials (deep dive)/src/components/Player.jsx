@@ -9,6 +9,7 @@ export default function Player({ initialName, symbol }) {
     // setIsEditing(!isEditing)
 
     // React ensures that the most recent state value is used when functional updates are employed
+    // The parameter is the guaranteed latest state value
     setIsEditing((editing) => !editing);
   };
 
@@ -17,12 +18,11 @@ export default function Player({ initialName, symbol }) {
     setPlayerName(event.target.value);
   };
 
-  let editablePlayerName = <span className='player-name'>{initialName}</span>;
+  let editablePlayerName = <span className='player-name'>{playerName}</span>;
 
   if (isEditing) {
-    editablePlayerName = (
-      <input type='text' required value={initialName} onChange={handleChange} />
-    );
+    //                                                          Two-way binding v
+    editablePlayerName = <input type='text' required value={playerName} onChange={handleChange} />;
   }
 
   return (
