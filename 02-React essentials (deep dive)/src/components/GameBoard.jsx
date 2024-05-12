@@ -4,7 +4,19 @@ const initialGameBoard = [
   [null, null, null],
 ];
 
-export default function GameBoard({ onSelectSquare }) {
+export default function GameBoard({ onSelectSquare, turns }) {
+  // (Computed value) Deriving state from gameTurns state by props ->
+  let gameBoard = initialGameBoard;
+
+  for (const turn of turns) {
+    // Destructurization of the array
+    const { square, player } = turn;
+    const { row, col } = square;
+
+    gameBoard[row][col] = player;
+  }
+  // <-
+
   /*
   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
@@ -20,7 +32,7 @@ export default function GameBoard({ onSelectSquare }) {
 
     onSelectSquare();
   }
-  */
+*/
 
   return (
     <ol id='game-board'>
@@ -29,7 +41,7 @@ export default function GameBoard({ onSelectSquare }) {
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
-                <button onClick={onSelectSquare}>{playerSymbol}</button>
+                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>{playerSymbol}</button>
               </li>
             ))}
           </ol>
