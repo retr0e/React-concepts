@@ -43,7 +43,7 @@ function App() {
         {/* Lifting the state up (over here pt.3) */}
         <GameBoard onSelectSquare={handleSelectSquare} turns={gameTurns} />
       </div>
-      <Log />
+      <Log turns={gameTurns} />
     </main>
   );
 }
