@@ -29,7 +29,8 @@ function App() {
 
   const activePlayer = deriveActivePlayer(gameTurns);
 
-  let gameBoard = initialGameBoard;
+  // Working on copy of initialArray not the loaded in memory
+  let gameBoard = [...initialGameBoard.map((array) => [...array])];
 
   for (const turn of gameTurns) {
     // Destructurization of the array
@@ -73,6 +74,10 @@ function App() {
     });
   }
 
+  function handleRestart() {
+    setGameTurns([]);
+  }
+
   return (
     <main>
       <div id='game-container'>
@@ -82,7 +87,7 @@ function App() {
           {/* Lifting the state up (over here pt.2) */}
           <Player initialName='Player 2' symbol='O' isActive={activePlayer === "O"} />
         </ol>
-        {(winner || hasDraw) && <GameOver winner={winner} />}
+        {(winner || hasDraw) && <GameOver winner={winner} onRestart={handleRestart} />}
         {/* Lifting the state up (over here pt.3) */}
         <GameBoard onSelectSquare={handleSelectSquare} board={gameBoard} />
       </div>
