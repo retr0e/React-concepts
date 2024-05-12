@@ -6,7 +6,12 @@ import Log from "./components/Log.jsx";
 import GameOver from "./components/GameOver.jsx";
 import { WINNING_COMBINATIONS } from "./winning-combinations.js";
 
-const initialGameBoard = [
+const PLAYERS = {
+  X: "Player 1",
+  O: "Player 2",
+};
+
+const INITIAL_GAME_BOARD = [
   [null, null, null],
   [null, null, null],
   [null, null, null],
@@ -22,25 +27,7 @@ function deriveActivePlayer(gameTurns) {
   return currentPlayer;
 }
 
-function App() {
-  // Lifting the state up (over here)
-  // to manage the information that is needed in multiple components
-  const [players, setPlayers] = useState({ X: "Player 1", O: "Player 2" });
-  const [gameTurns, setGameTurns] = useState([]);
-
-  const activePlayer = deriveActivePlayer(gameTurns);
-
-  // Working on copy of initialArray not the loaded in memory
-  let gameBoard = [...initialGameBoard.map((array) => [...array])];
-
-  for (const turn of gameTurns) {
-    // Destructurization of the array
-    const { square, player } = turn;
-    const { row, col } = square;
-
-    gameBoard[row][col] = player;
-  }
-
+function deriveWinner(gameBoard, players) {
   let winner;
 
   for (const combination of WINNING_COMBINATIONS) {
@@ -57,6 +44,33 @@ function App() {
     }
   }
 
+  return winner;
+}
+
+function deriveGameBoard(gameTurns) {
+  // Working on copy of initialArray not the loaded in memory
+  let gameBoard = [...INITIAL_GAME_BOARD.map((array) => [...array])];
+
+  for (const turn of gameTurns) {
+    // Destructurization of the array
+    const { square, player } = turn;
+    const { row, col } = square;
+
+    gameBoard[row][col] = player;
+  }
+
+  return gameBoard;
+}
+
+function App() {
+  // Lifting the state up (over here)
+  // to manage the information that is needed in multiple components
+  const [players, setPlayers] = useState(PLAYERS);
+  const [gameTurns, setGameTurns] = useState([]);
+
+  const activePlayer = deriveActivePlayer(gameTurns);
+  const gameBoard = deriveGameBoard(gameTurns);
+  const winner = deriveWinner(gameBoard, players);
   const hasDraw = gameTurns.length === 9 && !winner;
 
   function handleSelectSquare(rowIndex, colIndex) {
@@ -94,14 +108,14 @@ function App() {
         <ol id='players' className='highlight-player'>
           {/* Lifting the state up (over here pt.1) */}
           <Player
-            initialName='Player 1'
+            initialName={PLAYERS.X}
             symbol='X'
             isActive={activePlayer === "X"}
             onChangeName={handlePlayerNameChange}
           />
           {/* Lifting the state up (over here pt.2) */}
           <Player
-            initialName='Player 2'
+            initialName={PLAYERS.O}
             symbol='O'
             isActive={activePlayer === "O"}
             onChangeName={handlePlayerNameChange}
