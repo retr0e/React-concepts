@@ -22,7 +22,9 @@ export default function Player({ initialName, symbol, isActive }) {
 
   if (isEditing) {
     //                                                          Two-way binding v
-    editablePlayerName = <input type='text' required value={playerName} onChange={handleChange} />;
+    editablePlayerName = (
+      <input type='text' required value={playerName} onChange={handleChange} />
+    );
   }
 
   return (
