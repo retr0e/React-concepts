@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Player({ initialName, symbol, isActive }) {
+export default function Player({ initialName, symbol, isActive, onChangeName }) {
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -11,6 +11,9 @@ export default function Player({ initialName, symbol, isActive }) {
     // React ensures that the most recent state value is used when functional updates are employed
     // The parameter is the guaranteed latest state value
     setIsEditing((editing) => !editing);
+    if (isEditing) {
+      onChangeName(symbol, playerName);
+    }
   };
 
   // React give automatially event parameter
