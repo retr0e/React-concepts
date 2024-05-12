@@ -4,23 +4,29 @@ import Log from "./components/Log.jsx";
 
 import { useState } from "react";
 
+function deriveActivePlayer(gameTurns) {
+  let currentPlayer = "X";
+
+  if (gameTurns.length > 0 && gameTurns[0].player === "X") {
+    currentPlayer = "O";
+  }
+
+  return currentPlayer;
+}
+
 function App() {
   // Lifting the state up (over here)
   // to manage the information that is needed in multiple components
-  const [activePlayer, setActivePlayer] = useState("X");
   const [gameTurns, setGameTurns] = useState([]);
 
+  const activePlayer = deriveActivePlayer(gameTurns);
+
   function handleSelectSquare(rowIndex, colIndex) {
-    setActivePlayer((currentlyActivePlayer) => (currentlyActivePlayer === "X" ? "O" : "X"));
     setGameTurns((prevTurns) => {
       // It is not a good idea to use another state in the state update (margeing different states)
       // For example if we use "activePlayer" state instead of solution below
       // because there is no guarantee for this state to be te lates value
-      let currentPlayer = "X";
-
-      if (prevTurns.length > 0 && prevTurns[0].player === "X") {
-        currentPlayer = "O";
-      }
+      const currentPlayer = deriveActivePlayer(prevTurns);
 
       const updatedTurns = [
         { square: { row: rowIndex, col: colIndex }, player: currentPlayer },
