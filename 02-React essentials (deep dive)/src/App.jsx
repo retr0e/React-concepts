@@ -13,8 +13,9 @@ function App() {
   function handleSelectSquare(rowIndex, colIndex) {
     setActivePlayer((currentlyActivePlayer) => (currentlyActivePlayer === "X" ? "O" : "X"));
     setGameTurns((prevTurns) => {
-      // It is not a good idea to use another state in the state update
+      // It is not a good idea to use another state in the state update (margeing different states)
       // For example if we use "activePlayer" state instead of solution below
+      // because there is no guarantee for this state to be te lates value
       let currentPlayer = "X";
 
       if (prevTurns.length > 0 && prevTurns[0].player === "X") {
